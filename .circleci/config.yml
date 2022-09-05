@@ -19,39 +19,27 @@ jobs:
             sudo cp -r node-v18.0.0-linux-x64/{bin,include,lib,share} /usr/
             node --version => v18.0.0
             sudo apt install nodejs
-
             echo "--------- The images is Building ------------"
-
             docker build -t udagram-api-feed ./udagram-api-feed
             docker tag udagram-api-feed truthpej/udagram-api-feed:v1
-
             docker build -t udagram-api-user ./udagram-api-user
             docker tag udagram-api-user truthpej/udagram-api-user:v1
             
             docker build -t udagram-frontend ./udagram-frontend
             docker tag udagram-frontend truthpej/udagram-frontend:v1
-
             docker build -t udagram-reverseproxy ./udagram-reverseproxy
             docker tag udagram-reverseproxy truthpej/udagram-reverseproxy:v1
-
             echo "-------- All images succesfully built----------"
-
             echo " ------- login in to hub--------"
-
             docker login -u truthpej -p $DOCKERPASS
-
             echo "-------------- Pushing images to dockerhub-------"
-
             docker push truthpej/udagram-api-feed:v1
             docker push truthpej/udagram-api-user:v1
             docker push truthpej/udagram-frontend:v1
             docker push truthpej/udagram-reverseproxy:v1
-
 workflows:
   default:
     jobs:
       - lint-app
       - build-docker:
           requires: [lint-app]
-
-
