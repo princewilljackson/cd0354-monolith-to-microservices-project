@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: docker.io/truthpej/udagram-frontend
+        image: docker.io/truthpej/udagram-frontend:v1
         ports: 
         - containerPort: 80
         resources:
@@ -22,3 +22,17 @@ spec:
             cpu: 500m
           requests:
             cpu: 200m
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    run: frontend
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    run: frontend
